@@ -22,6 +22,7 @@ val lineage1 = new Lineage(Array(inputFile1,inputFile2),outputFile,"delta",(outp
       try {
 
         //the second argument allows to append chars into the file
+        //out = Some(new FileOutputStream(path donde guardar los ficheros .log +destinationFile.fileName+".log", true))
         out = Some(new FileOutputStream(s"C:/Users/i.a.gonzalez.salas/testing/$filedest.log", true))
 
         //writes the json lineage to the new logfile.(only applicated if destination file distinc to origin file name)
@@ -29,6 +30,7 @@ val lineage1 = new Lineage(Array(inputFile1,inputFile2),outputFile,"delta",(outp
         l.originFiles.foreach { o => if (o.fileName != filedest) saveLineageForFile(out, o.fileName) }
         for (i <- 0 until l.originFiles.length) {
           if (l.originFiles(i).fileName == filedest) {
+            //out = Some(new FileOutputStream(path donde guardar los ficheros .log +destinationFile.fileName+".log", true))
             out = Some(new FileOutputStream(s"C:/Users/i.a.gonzalez.salas/testing/$filedest.log", true))
             val linj = new Gson
             out.get.write(" \r\n".getBytes)
@@ -49,6 +51,7 @@ val lineage1 = new Lineage(Array(inputFile1,inputFile2),outputFile,"delta",(outp
     }
     //-----------------metodo2
     def saveLineageForFile(out: Option[FileOutputStream], fileName: String) {
+      //val in = Some(new FileOutputStream(path donde estan los ficheros .log +fileName+".log", true))
       val in = Some(new FileInputStream(s"C:/Users/i.a.gonzalez.salas/testing/$fileName.log"))
       var c = 0
       while ({ c = in.get.read; c != -1 }) {
