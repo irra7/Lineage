@@ -8,17 +8,16 @@ import java.util.Date
 
 object LineageService {
 
-  //metodo borrado de los ficheros
-  //probar en un entorno de prueba
-  def delete(file: File) {
-  if (file.isDirectory) 
-    Option(file.listFiles).map(_.toList).getOrElse(Nil).foreach(delete(_))
-  file.delete
-}
+  /*example of how to introduce a lineage   
+val lineage1 = new Lineage(Array(inputFile1,inputFile2),outputFile,"delta",(outputFile.fileName.hashCode()),date)*/
   
-  def writelineage(l: Lineage) {
+  case class FileDescriptor(fileName: String, path: String, ip: String)
+  case class Lineage(originFiles: Array[FileDescriptor], destinationFile: FileDescriptor, process: String, fileId: Int, date: Date) {
+    //-----------------metodo1
+    def writelineage(l: Lineage) {
       var in = None: Option[FileInputStream]
       var out = None: Option[FileOutputStream]
+      //varios ficheros de origen
       val filedest = l.destinationFile.fileName
       try {
 
@@ -34,8 +33,8 @@ object LineageService {
             val linj = new Gson
             out.get.write(" \r\n".getBytes)
             linj.toJson(l).foreach(out.get.write(_))
+            out.get.write(" \r\n".getBytes)
             if (out.isDefined) out.get.close
-            val filetemp = New File(s"C:/Users/i.a.gonzalez.salas/testing/$l.originFiles(i)fileName.log")
           }
         }
 
@@ -49,17 +48,18 @@ object LineageService {
       }
     }
     //-----------------metodo2
-    private def saveLineageForFile(out: Option[FileOutputStream], fileName: String) {
+    def saveLineageForFile(out: Option[FileOutputStream], fileName: String) {
       val in = Some(new FileInputStream(s"C:/Users/i.a.gonzalez.salas/testing/$fileName.log"))
-      out.get.write(" \r\n".getBytes)
       var c = 0
       while ({ c = in.get.read; c != -1 }) {
         out.get.write(c)
       }
+      out.get.write(" \r\n".getBytes)
       if (in.isDefined) in.get.close
-
     }
-    
-  case class FileDescriptor(fileName: String, path: String, ip: String)
-  case class Lineage(originFiles: Array[FileDescriptor], destinationFile: FileDescriptor, process: String, fileId: Int, date:Date = new Date())
+    //-----------------endofme
+  }
+
 }
+    
+  

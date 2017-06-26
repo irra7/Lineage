@@ -23,17 +23,21 @@ For instance
     11:08:09.789 [main] INFO scala.App - Concatenated arguments = foo,bar
     
 ## What are the command line parameters?
- ipOrigin: String, source: String, ipDestiny: String, destiny: String, process: String, files: String, fileId: Int, date: Date
+
+FileDescriptor: [(fileName: String, path: String, ip: String)]
 | Parameter | Description | Type | Required | 
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| --originFileNames  | These are the names of the origin files. | Array[String] | Required |
-| --destinationFileName  | This is the name of the destination file. | String | Required |
-| --sourceFilesIp  | This is the ip of the origin files. | Array[String] | Required |
-| --source  | This is the path of the origin file. | String | Required |
-| --ipDestiny  | This is the ip of the destination file. | String | Required |
-| --destiny  |  This is the path of the destination file. | String | Required |
+| --FileName  | In this argument we keep the information of the origin files. | Array[FileDescriptor] | Required |
+| --path  | In this argument we keep the information of the destination file. | FileDescriptor | Required |
+| --ip  | This is the ip of the origin files. | Array[String] | Required |
+
+Lineage: [(originFiles: Array[FileDescriptor], destinationFile: FileDescriptor, process: String, fileId: Int, date: Date)]
+| Parameter | Description | Type | Required | 
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| --originFiles  | In this argument we keep the information of the origin files. | Array[FileDescriptor] | Required |
+| --destinationFile  | In this argument we keep the information of the destination file. | FileDescriptor | Required |
 | --process  | This is process applied to the origin files. | String | Required |
-| --fileId  | This is ID generated for the file. | String | Required |
+| --fileId  | This is ID generated for the output file. | String | Generated |
 | --date  | This is the date of the applied process to the file or files. | Date | Generated |
 
 
