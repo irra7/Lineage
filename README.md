@@ -5,7 +5,7 @@ This project includes a simple skeleton that allows to run some sample applicati
 ### What should I do now?
 
 You can just build the package
-aa
+
     mvn clean package
 
 But if you prefer you can also check if code has a proper style
